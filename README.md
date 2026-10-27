@@ -1,159 +1,100 @@
 # Library Management System
 
-## Database Systems Lab Project
+BCSE302P Database Systems Lab project by L Srinath (24BDS0265) and Sugash K (24BCE2565).
 
-A Library Management System developed as a group project for the Database Systems Lab. The project uses MongoDB as the NoSQL database to manage books, authors, library members, loans, and reservations.
+This repository contains the complete MongoDB project for all three reviews. It includes a responsive staff interface, protected REST API, database seed with more than 100 records, CRUD workflows, transactions, indexes, validation and six aggregation reports. Loan renewal is transactional, limited to two renewals and blocked for overdue loans or titles with active reservations.
 
-## Project Overview
+## Rubric coverage
 
-The system is designed to manage the core operations of a library through a MongoDB database. It demonstrates NoSQL database concepts including document-based data storage, CRUD operations, aggregation pipelines, indexing, and transactions.
-
-The current implementation focuses on the database layer and core database functionalities.
-
-## Technologies Used
-
-- MongoDB
-- MongoDB Shell (mongosh)
-- JavaScript for MongoDB scripts
-
-## Database Collections
-
-The database contains five collections:
-
-| Collection | Description |
+| Requirement | Implementation |
 |---|---|
-| `authors` | Stores information about book authors |
-| `books` | Stores book details, categories, publishers, and available copies |
-| `members` | Stores library member information |
-| `loans` | Stores book issue and return records |
-| `reservations` | Stores book reservation records |
+| At least 5 collections | authors, books, members, loans, reservations and users |
+| 100+ documents | 137 seeded documents |
+| CRUD operations | Books, members, loans and reservations |
+| 5 aggregation queries | Six reports in `src/routes/analytics.js` |
+| 2 indexes | Search, availability, active-loan and reservation indexes |
+| Basic authentication | JWT cookie login with admin and librarian roles |
+| Transactions | Issue, return and renewal workflows use MongoDB transactions |
+| Loan renewal policy | Transactional renewal; maximum twice; blocked when overdue or queued |
+| Responsive UI | Desktop, tablet and mobile layouts in `public/` |
+| Documentation | Review 2 report, complete Review 3 report, user manual, slides and demo guide |
 
-## Features Implemented
+## Review 3 submission
 
-- MongoDB database and collection creation
-- Sample data loading
-- CRUD operations
-  - Create
-  - Read
-  - Update
-  - Delete
-- Aggregation pipelines
-- `$lookup` operations between collections
-- Indexing
-- MongoDB transactions
-- Single-node replica set configuration for transaction support
+The complete Review 3 report is in [`docs/Library_Management_System_Review_3_Report.pdf`](docs/Library_Management_System_Review_3_Report.pdf). It includes Chapters 1-8, IEEE-style references, the database schema/seed/query appendices, diagrams, screenshots and user manual. The full source code is included in this project archive. No public GitHub or Google Drive URL has been configured; upload this archive to the faculty-approved repository if an external URL is required.
 
-## Sample Data
+## Fastest setup with Docker
 
-The database currently contains 112 documents across the five collections:
+1. Open Docker Desktop.
+2. In this folder, run:
 
-- 15 authors
-- 41 books
-- 25 members
-- 21 loans
-- 10 reservations
+```bash
+docker compose up -d --build
+docker compose exec app npm run seed
+```
 
-**Total: 112 documents**
+3. Open `http://localhost:3000`.
+4. Sign in with `admin@library.edu` and `admin123`.
 
-## Project Structure
+The Docker configuration runs MongoDB as a single-node replica set so transaction demonstrations work.
+
+## Local setup
+
+Requirements: Node.js 20+, MongoDB 6+ configured as a replica set, and npm.
+
+```bash
+cp .env.example .env
+npm install
+npm run seed
+npm start
+```
+
+## Useful commands
+
+```bash
+npm test          # unit tests for fine and due-date logic
+npm run check     # JavaScript syntax checks
+npm run seed      # reset and reload demonstration data
+npm run dev       # development server with Node watch mode
+```
+
+## Seeded data and login
+
+| Collection | Records |
+|---|---:|
+| authors | 20 |
+| books | 40 |
+| members | 30 |
+| loans | 30 |
+| reservations | 15 |
+| users | 2 |
+| **Total** | **137** |
+
+- Administrator: `admin@library.edu` / `admin123`
+- Librarian: `librarian@library.edu` / `admin123`
+
+Change the demonstration password and `JWT_SECRET` before deploying outside the classroom.
+
+## Project structure
 
 ```text
-library-management-mongodb/
-│
-├── README.md
-│
-├── database/
-│   ├── setup.js
-│   ├── sample_data.js
-│   ├── crud.js
-│   ├── aggregation.js
-│   ├── indexes.js
-│   └── transaction.js
-
+public/              responsive user interface
+src/models/          MongoDB collections and indexes
+src/routes/          authentication, CRUD, circulation and analytics
+src/middleware/      authentication and error handling
+src/scripts/seed.js  137-record seed and database validation
+test/                automated unit tests
+docs/                reports, user manual, demo script and viva guide
 ```
 
-## How to Run
+## Demonstration order
 
-### Prerequisites
+1. Sign in and show the dashboard counts.
+2. Add, search and update a book.
+3. Register a member.
+4. Issue and return a book, then explain the transaction.
+5. Reserve a book with zero available copies.
+6. Show the six live reports and export the overdue CSV.
+7. Show indexes and validators in MongoDB Compass.
 
-Install:
-
-- MongoDB Community Server
-- MongoDB Shell (`mongosh`)
-
-### Step 1: Start MongoDB
-
-Make sure the MongoDB server is running.
-
-### Step 2: Open MongoDB Shell
-
-Open `mongosh`.
-
-### Step 3: Select the Database
-
-```javascript
-use library_management
-```
-
-### Step 4: Run the Database Scripts
-
-Run the scripts in the following order:
-
-1. `setup.js`
-2. `sample_data.js`
-3. `crud.js`
-4. `aggregation.js`
-5. `indexes.js`
-6. `transaction.js`
-
-The transaction script requires MongoDB to run as a replica set.
-
-## MongoDB Features Demonstrated
-
-### CRUD Operations
-
-The project demonstrates inserting, retrieving, updating, and deleting documents.
-
-### Aggregation
-
-Five aggregation pipelines are implemented for:
-
-- Finding the number of books in each category
-- Finding the most borrowed books
-- Finding books borrowed by each member
-- Calculating total fines
-- Finding currently issued books
-
-### Indexing
-
-Indexes are created on:
-
-- `isbn`
-- `title`
-
-in the `books` collection.
-
-### Transactions
-
-A MongoDB transaction is used when issuing a book. The transaction:
-
-1. Creates a loan record.
-2. Decreases the available number of copies.
-
-Both operations are committed together.
-
-## Project Team
-
-This project was developed as a group project by:
-
-| Name | Registration Number |
-|---|---|
-| L Srinath | 24BDS0265 |
-| Sugash K | 24BCE2565 |
-
-
-## Course Information
-
-**Course:** Database Systems Lab (BCSE302L)  
-**Project:** Library Management System  
-**Academic Year:** 2026
+See `docs/DEMO_SCRIPT.md` for a timed demonstration and `docs/RUBRIC_CHECKLIST.md` before submission.

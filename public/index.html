@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Library Management System for books, members, circulation and analytics">
+  <title>Library Management System</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <section id="login-view" class="login-shell" aria-labelledby="login-title">
+    <div class="login-intro">
+      <p class="eyebrow">BCSE302P Database Systems Project</p>
+      <h1 id="login-title">Library records without the paper chase.</h1>
+      <p>Manage the catalog, members, loans, reservations and overdue work from one reliable MongoDB application.</p>
+      <dl class="login-facts">
+        <div><dt>5+</dt><dd>operational collections</dd></div>
+        <div><dt>6</dt><dd>analytics reports</dd></div>
+        <div><dt>1</dt><dd>atomic return workflow</dd></div>
+      </dl>
+    </div>
+    <form id="login-form" class="login-form">
+      <span class="catalog-mark" aria-hidden="true">LMS</span>
+      <h2>Staff sign in</h2>
+      <p class="muted">Use the seeded demonstration account.</p>
+      <label>Email<input name="email" type="email" value="admin@library.edu" autocomplete="username" required></label>
+      <label>Password<input name="password" type="password" value="admin123" autocomplete="current-password" required></label>
+      <button class="button primary" type="submit">Sign in</button>
+      <p id="login-error" class="form-error" role="alert"></p>
+      <small>Demo: admin@library.edu / admin123</small>
+    </form>
+  </section>
+
+  <div id="app-view" class="app-shell" hidden>
+    <aside class="sidebar">
+      <div class="brand"><span class="catalog-mark">LMS</span><div><strong>Library desk</strong><small>Circulation system</small></div></div>
+      <nav aria-label="Primary navigation">
+        <button class="nav-item active" data-view="dashboard">Overview</button>
+        <button class="nav-item" data-view="books">Books</button>
+        <button class="nav-item" data-view="members">Members</button>
+        <button class="nav-item" data-view="circulation">Circulation</button>
+        <button class="nav-item" data-view="reservations">Reservations</button>
+        <button class="nav-item" data-view="analytics">Reports</button>
+      </nav>
+      <div class="sidebar-foot"><span id="user-name">Staff</span><button id="logout-button" class="text-button">Sign out</button></div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <button id="menu-button" class="menu-button" aria-label="Open navigation">Menu</button>
+        <div><p class="eyebrow" id="section-kicker">Library operations</p><h1 id="section-title">Overview</h1></div>
+        <div class="date-block"><span>Today</span><strong id="today"></strong></div>
+      </header>
+      <div id="flash" class="flash" role="status" hidden></div>
+      <section id="content" class="content" aria-live="polite"></section>
+    </main>
+  </div>
+
+  <dialog id="modal"><form method="dialog" id="modal-form"><header><h2 id="modal-title"></h2><button type="button" data-modal-close aria-label="Close">Close</button></header><div id="modal-body"></div><footer><button type="button" data-modal-close class="button">Cancel</button><button id="modal-submit" type="submit" value="default" class="button primary">Save</button></footer></form></dialog>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

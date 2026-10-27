@@ -1,0 +1,32 @@
+{
+  "name": "library-management-system",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BCSE302P MongoDB Library Management System",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "seed": "node src/scripts/seed.js",
+    "test": "node --test test/circulation.test.js",
+    "test:api": "node test/api-smoke.js",
+    "verify": "npm run check && npm test",
+    "check": "node --check src/server.js && node --check public/app.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "compression": "^1.8.1",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.18.1",
+    "pino-http": "^10.5.0",
+    "zod": "^4.1.8"
+  }
+}
